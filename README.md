@@ -67,4 +67,4 @@ Image Upload → Multer
 
 ## Author
 
-Developed as a Full Stack MERN Project for Lost and Found Item Management.
+Developed by Anjali Mishra
