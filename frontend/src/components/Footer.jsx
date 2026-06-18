@@ -62,7 +62,7 @@ export default function Footer() {
           </h3>
 
           <p className="text-gray-400">
-            Email: support@lofo.com
+            Email: anjali@lofo.com
           </p>
 
           <p className="text-gray-400 mt-2">
@@ -70,7 +70,7 @@ export default function Footer() {
           </p>
 
           <p className="text-gray-400 mt-2">
-            Address: Your College / City
+            Location: India
           </p>
         </div>
 
