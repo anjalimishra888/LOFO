@@ -29,9 +29,9 @@ export default function Login() {
         form
       );
 
-      login(res.data.token);
+      login(res.data);
 
-      navigate("/");
+      navigate("/my-items");
 
     } catch (error) {
 
@@ -45,7 +45,6 @@ export default function Login() {
       setLoading(false);
 
     }
-
   };
 
   return (
@@ -66,6 +65,7 @@ export default function Login() {
             type="email"
             placeholder="Email"
             className="w-full border p-3 rounded"
+            value={form.email}
             onChange={(e) =>
               setForm({
                 ...form,
@@ -78,6 +78,7 @@ export default function Login() {
             type="password"
             placeholder="Password"
             className="w-full border p-3 rounded"
+            value={form.password}
             onChange={(e) =>
               setForm({
                 ...form,

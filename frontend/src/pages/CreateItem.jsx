@@ -22,19 +22,13 @@ export default function CreateItem() {
     });
 
     try {
-
-      await api.post(
-        "/items/create",
-        formData
-      );
-
-      alert("Item Created");
-
-    } catch (error) {
-
-      console.log(error);
-
-    }
+  const res = await api.post("/items/create", data);
+  console.log(res.data);
+  alert("Item Created Successfully");
+} catch (error) {
+  console.log(error.response?.data);
+  alert("Error Creating Item");
+}
 
   };
 

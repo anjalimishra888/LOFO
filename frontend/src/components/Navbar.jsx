@@ -43,6 +43,14 @@ export default function Navbar() {
             My Items
           </Link>
 
+          <Link
+            to="/matches"
+            className="hover:text-blue-700"
+          >
+            Matches
+          </Link>
+      
+
           {isAuthenticated ? (
             <>
               <button

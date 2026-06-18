@@ -1,35 +1,85 @@
-import { createContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+} from "react";
 
-export const AuthContext = createContext();
+export const AuthContext =
+  createContext();
 
-export default function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
+export default function AuthProvider({
+  children,
+}) {
+  const [user, setUser] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    try {
+      const storedUser =
+        localStorage.getItem("user");
 
-    if (storedToken) {
-      setToken(storedToken);
+      if (storedUser) {
+        setUser(
+          JSON.parse(storedUser)
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Failed to load user",
+        error
+      );
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  const login = (newToken) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
+  const login = (userData) => {
+    if (!userData) return;
+
+    localStorage.setItem(
+      "user",
+      JSON.stringify(userData)
+    );
+
+    localStorage.setItem(
+      "token",
+      userData.token
+    );
+
+    setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
+    localStorage.removeItem(
+      "user"
+    );
+
+    localStorage.removeItem(
+      "token"
+    );
+
+    setUser(null);
   };
+
+  const isAuthenticated =
+    !!user;
+
+  const isAdmin =
+    user?.role === "admin";
 
   return (
     <AuthContext.Provider
       value={{
-        token,
-        isAuthenticated: !!token,
+        user,
+        setUser,
         login,
         logout,
+        loading,
+        isAuthenticated,
+        isAdmin,
       }}
     >
       {children}
