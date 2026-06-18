@@ -16,12 +16,19 @@ const messageSchema = new mongoose.Schema(
 
     itemId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Item"
+      ref: "Item",
+      required: true
     },
 
     message: {
       type: String,
-      required: true
+      required: true,
+      trim: true
+    },
+
+    isRead: {
+      type: Boolean,
+      default: false
     }
   },
   {

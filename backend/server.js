@@ -42,6 +42,21 @@ app.use(
   require("./routes/itemRoutes")
 );
 
+app.use(
+  "/api/admin",
+  require("./routes/adminRoutes")
+);
+
+app.use(
+  "/api/messages",
+  require("./routes/messageRoutes")
+);
+
+app.use(
+  "/api/matches",
+  require("./routes/matchRoutes")
+);
+
 app.get("/", (req, res) => {
   res.send(
     "LOFO Backend Running"

@@ -7,38 +7,52 @@ const protect = async (
   next
 ) => {
   try {
-    let token;
+
+    const authHeader =
+      req.headers.authorization;
 
     if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith(
-        "Bearer"
+      !authHeader ||
+      !authHeader.startsWith(
+        "Bearer "
       )
     ) {
-      token =
-        req.headers.authorization.split(
-          " "
-        )[1];
+      return res.status(401).json({
+        message: "Not Authorized",
+      });
+    }
 
-      const decoded = jwt.verify(
-        token,
-        process.env.JWT_SECRET
-      );
+    const token =
+      authHeader.split(" ")[1];
 
-      req.user = await User.findById(
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    const user =
+      await User.findById(
         decoded.id
       ).select("-password");
 
-      next();
-    } else {
+    if (!user) {
       return res.status(401).json({
-        message: "Not Authorized"
+        message: "User Not Found",
       });
     }
+
+    req.user = user;
+
+    next();
+
   } catch (error) {
+
+    console.log(error);
+
     return res.status(401).json({
-      message: "Invalid Token"
+      message: "Invalid Token",
     });
+
   }
 };
 

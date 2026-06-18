@@ -19,7 +19,11 @@ const itemSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["lost", "found"],
+      enum: [
+        "lost",
+        "found",
+        "recovered"
+      ],
       required: true
     },
 

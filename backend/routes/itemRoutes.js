@@ -1,15 +1,9 @@
 const express = require("express");
 
-const router =
-  express.Router();
+const router = express.Router();
 
-const protect = require(
-  "../middleware/authMiddleware"
-);
-
-const upload = require(
-  "../middleware/uploadMiddleware"
-);
+const protect = require("../middleware/authMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 
 const {
   createItem,
@@ -18,28 +12,25 @@ const {
   getSingleItem,
   updateItem,
   deleteItem,
-  myItems
-} = require(
-  "../controllers/itemController"
-);
+  myItems,
+  contactOwner,
+} = require("../controllers/itemController");
+
+
+// =======================
+// PUBLIC ROUTES
+// =======================
 
 router.get("/", getAllItems);
 
-router.get(
-  "/search",
-  searchItems
-);
+router.get("/search", searchItems);
 
-router.get(
-  "/my-items",
-  protect,
-  myItems
-);
 
-router.get(
-  "/:id",
-  getSingleItem
-);
+// =======================
+// PROTECTED ROUTES
+// =======================
+
+router.get("/my-items", protect, myItems);
 
 router.post(
   "/create",
@@ -60,5 +51,14 @@ router.delete(
   protect,
   deleteItem
 );
+
+router.get(
+  "/contact/:id",
+  protect,
+  contactOwner
+);
+
+
+router.get("/:id", getSingleItem);
 
 module.exports = router;
