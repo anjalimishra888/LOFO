@@ -16,7 +16,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://lofo-blu.vercel.app",
+      "https://lofo-blue.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
