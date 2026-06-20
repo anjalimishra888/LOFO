@@ -9,7 +9,7 @@ DASHBOARD
 */
 
 export const getDashboardStats = async () => {
-  const res = await api.get("/admin/dashboard");
+  const res = await api.get("/admin/stats");
   return res.data;
 };
 

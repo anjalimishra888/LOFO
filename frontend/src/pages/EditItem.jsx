@@ -11,6 +11,9 @@ export default function EditItem() {
     description: "",
     category: "",
     status: "lost",
+    itemType: "lost",
+    itemStatus: "open",
+    location: "",
   });
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export default function EditItem() {
   const fetchItem = async () => {
     try {
       const res = await api.get(`/items/${id}`);
-      setForm(res.data);
+      setForm(res.data.item || {});
     } catch (error) {
       console.log(error);
     }
@@ -38,19 +41,15 @@ export default function EditItem() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <div className="bg-white shadow rounded-xl p-6">
-        <h2 className="text-3xl font-bold mb-6">
-          Edit Item
-        </h2>
+    <div className="min-h-screen bg-surface-soft overflow-x-hidden px-4 pb-28 pt-6">
+      <div className="max-w-md mx-auto card-surface p-6">
+        <h2 className="text-3xl font-bold mb-6">Edit Item</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             value={form.title}
-            onChange={(e) =>
-              setForm({ ...form, title: e.target.value })
-            }
-            className="w-full border p-3 rounded"
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+            className="w-full border p-4 rounded-3xl min-h-[48px]"
             placeholder="Title"
           />
 
@@ -63,7 +62,7 @@ export default function EditItem() {
               })
             }
             rows="4"
-            className="w-full border p-3 rounded"
+            className="w-full border p-4 rounded-3xl min-h-[120px]"
             placeholder="Description"
           />
 
@@ -75,25 +74,55 @@ export default function EditItem() {
                 category: e.target.value,
               })
             }
-            className="w-full border p-3 rounded"
+            className="w-full border p-4 rounded-3xl min-h-[48px]"
             placeholder="Category"
           />
 
-          <select
-            value={form.status}
+          <div className="grid gap-4 sm:grid-cols-2">
+            <select
+              value={form.status}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  status: e.target.value,
+                  itemType: e.target.value,
+                })
+              }
+              className="w-full border p-4 rounded-3xl min-h-[48px]"
+            >
+              <option value="lost">Lost</option>
+              <option value="found">Found</option>
+            </select>
+
+            <select
+              value={form.itemStatus}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  itemStatus: e.target.value,
+                })
+              }
+              className="w-full border p-4 rounded-3xl min-h-[48px]"
+            >
+              <option value="open">Open</option>
+              <option value="pending">Pending</option>
+              <option value="resolved">Resolved</option>
+            </select>
+          </div>
+
+          <input
+            value={form.location}
             onChange={(e) =>
               setForm({
                 ...form,
-                status: e.target.value,
+                location: e.target.value,
               })
             }
-            className="w-full border p-3 rounded"
-          >
-            <option value="lost">Lost</option>
-            <option value="found">Found</option>
-          </select>
+            className="w-full border p-4 rounded-3xl min-h-[48px]"
+            placeholder="Location"
+          />
 
-          <button className="bg-blue-600 text-white px-6 py-3 rounded">
+          <button className="w-full bg-brand text-white rounded-3xl px-6 py-3 min-h-[48px] hover:bg-brand/90">
             Update Item
           </button>
         </form>

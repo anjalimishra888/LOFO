@@ -11,6 +11,8 @@ exports.createItem = async (req, res) => {
       category: req.body.category,
       status: req.body.status,
       location: req.body.location,
+      itemType: req.body.itemType || req.body.status,
+      itemStatus: req.body.itemStatus,
       image: req.file?.filename,
       userId: req.user._id
     });
@@ -44,9 +46,18 @@ exports.getAllItems = async (req, res) => {
       filter.category = req.query.category;
     }
 
-    const items = await Item.find(filter)
+    if (req.query.itemType) {
+      filter.itemType = req.query.itemType;
+    }
+
+    if (req.query.itemStatus) {
+      filter.itemStatus = req.query.itemStatus;
+    }
+
+    let items = await Item.find(filter)
       .populate("userId", "name email")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
 
     res.json({
       success: true,
@@ -69,12 +80,13 @@ exports.searchItems = async (req, res) => {
   try {
     const keyword = req.query.keyword || "";
 
-    const items = await Item.find({
+    let items = await Item.find({
       title: {
         $regex: keyword,
         $options: "i"
       }
-    });
+    })
+      .lean();
 
     res.json({
       success: true,
@@ -146,6 +158,8 @@ exports.updateItem = async (req, res) => {
     item.category = req.body.category || item.category;
     item.status = req.body.status || item.status;
     item.location = req.body.location || item.location;
+    item.itemType = req.body.itemType || req.body.status || item.itemType;
+    item.itemStatus = req.body.itemStatus || item.itemStatus;
 
     if (req.file) {
       item.image = req.file.filename;

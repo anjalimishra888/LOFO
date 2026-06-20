@@ -61,6 +61,12 @@ app.use(
   require("./routes/matchRoutes")
 );
 
+// Geocoding cache endpoint
+app.use(
+  "/api/geocode",
+  require("./routes/geocodeRoutes")
+);
+
 app.get("/", (req, res) => {
   res.send(
     "LOFO Backend Running"

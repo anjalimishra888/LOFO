@@ -1,16 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-export default function Profile() {
+export default function AdminProfile() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user?.role === "admin") {
-      navigate("/admin/profile", { replace: true });
-    }
-  }, [user, navigate]);
 
   const handleLogout = () => {
     logout();
@@ -23,38 +17,39 @@ export default function Profile() {
         <div className="flex items-center gap-4">
           <div className="relative">
             <img
-              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "User")}`}
-              alt=""
-              className="w-24 h-24 rounded-full border-2 border-cyan-400/40 bg-slate-900"
+              src={`https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || "Admin")}`}
+              alt="Admin Avatar"
+              className="w-24 h-24 rounded-full border-2 border-purple-400/40 bg-slate-900"
             />
-            <span className="absolute -bottom-1 -right-1 inline-flex h-5 w-5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/20" />
+            <span className="absolute -bottom-1 -right-1 inline-flex h-5 w-5 rounded-full bg-purple-400 shadow-lg shadow-purple-400/20" />
           </div>
+
           <div>
-            <h2 className="text-4xl font-bold text-white">User Profile</h2>
-            <p className="text-slate-400">Logged In User</p>
+            <h2 className="text-4xl font-bold text-white">Admin Profile</h2>
+            <p className="text-slate-400">Administrator access</p>
           </div>
         </div>
 
         <div className="mt-8 space-y-4">
           <div className="rounded-3xl border border-white/10 bg-slate-900/70 p-5 shadow-lg shadow-slate-950/20">
             <p className="font-semibold text-slate-300">Name</p>
-            <p className="mt-2 text-lg text-white">{user?.name || "N/A"}</p>
+            <p className="mt-2 text-lg text-white">{user?.name}</p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-slate-900/70 p-5 shadow-lg shadow-slate-950/20">
             <p className="font-semibold text-slate-300">Email</p>
-            <p className="mt-2 text-lg text-white">{user?.email || "N/A"}</p>
+            <p className="mt-2 text-lg text-white">{user?.email}</p>
           </div>
 
           <div className="rounded-3xl border border-white/10 bg-slate-900/70 p-5 shadow-lg shadow-slate-950/20">
             <p className="font-semibold text-slate-300">Role</p>
-            <p className="mt-2 text-lg text-cyan-300">{user?.role || "user"}</p>
+            <p className="mt-2 text-lg text-cyan-300">{user?.role || "admin"}</p>
           </div>
 
           <div>
             <button
               onClick={handleLogout}
-              className="w-full rounded-3xl bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-4 text-sm font-semibold text-white shadow-xl shadow-purple-500/20 transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
+              className="w-full rounded-3xl bg-gradient-to-r from-purple-500 to-fuchsia-500 px-5 py-4 text-sm font-semibold text-white shadow-xl shadow-fuchsia-500/20 transition-transform duration-200 hover:-translate-y-0.5 active:scale-95"
             >
               Logout
             </button>

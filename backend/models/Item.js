@@ -35,6 +35,18 @@ const itemSchema = new mongoose.Schema(
       type: String
     },
 
+    itemType: {
+      type: String,
+      enum: ["lost", "found"],
+      default: "lost"
+    },
+
+    itemStatus: {
+      type: String,
+      enum: ["open", "pending", "resolved"],
+      default: "open"
+    },
+
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

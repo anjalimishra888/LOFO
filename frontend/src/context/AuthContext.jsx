@@ -39,17 +39,25 @@ export default function AuthProvider({
   const login = (userData) => {
     if (!userData) return;
 
+    const cleanedUser = {
+      _id: userData._id,
+      name: userData.name,
+      email: userData.email,
+      role: userData.role,
+      token: userData.token,
+    };
+
     localStorage.setItem(
       "user",
-      JSON.stringify(userData)
+      JSON.stringify(cleanedUser)
     );
 
     localStorage.setItem(
       "token",
-      userData.token
+      cleanedUser.token
     );
 
-    setUser(userData);
+    setUser(cleanedUser);
   };
 
   const logout = () => {

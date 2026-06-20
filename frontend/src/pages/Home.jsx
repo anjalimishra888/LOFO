@@ -2,112 +2,64 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-slate-100 overflow-x-hidden">
+      <section className="px-4 pt-10 pb-16">
+        <div className="max-w-5xl mx-auto space-y-8">
 
-      {/* HERO */}
+          {/* HERO CARD */}
+          <div className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-2xl shadow-slate-950/40 backdrop-blur-xl">
 
-      <section className="bg-white">
-        <div className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-10 items-center">
+            {/* background effect */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(56,189,248,0.18),_transparent_40%),radial-gradient(circle_at_bottom_left,_rgba(168,85,247,0.16),_transparent_30%)] pointer-events-none" />
 
-          <div>
+            {/* CONTENT */}
+            <div className="relative space-y-6">
 
-            <span className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full">
-              Lost & Found Platform
-            </span>
+              {/* TEXT SECTION */}
+              <span className="inline-flex items-center rounded-full bg-cyan-500/15 px-4 py-2 text-sm font-semibold text-cyan-300 ring-1 ring-cyan-300/20">
+                Lost & Found Platform
+              </span>
 
-            <h1 className="text-6xl font-bold mt-6 leading-tight">
-              Lost It?
-              <br />
-              Find It Here.
-            </h1>
+              <h1 className="text-5xl font-semibold tracking-tight text-white leading-tight">
+                Lost it?{" "}
+                <br /><span className="text-cyan-300">Find it fast</span>.
+              </h1>
 
-            <p className="text-gray-600 mt-6 text-lg">
-              Report lost items, upload found items,
-              and connect people with their belongings.
-            </p>
+              <p className="max-w-xl text-sm leading-7 text-slate-300">
+                Report lost items, upload found belongings, and reconnect owners with their valuables using a modern, premium mobile-first experience.
+              </p>
 
-            <div className="flex gap-4 mt-8">
+              {/* BUTTONS */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Link
+                  to="/create"
+                  className="inline-flex items-center justify-center rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-2xl shadow-cyan-500/20 transition-transform duration-300 hover:-translate-y-1"
+                >
+                  Report Item
+                </Link>
 
-              <Link
-                to="/create"
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg"
-              >
-                Report Item
-              </Link>
+                <Link
+                  to="/recent-items"
+                  className="inline-flex items-center justify-center rounded-3xl border border-slate-600/70 bg-white/5 px-6 py-4 text-sm font-semibold text-slate-100 shadow-lg shadow-slate-950/20 transition-all duration-300 hover:bg-white/10"
+                >
+                  Browse Items
+                </Link>
+              </div>
 
-              <Link
-                to="/my-items"
-                className="border border-blue-600 text-blue-600 px-8 py-4 rounded-lg"
-              >
-                Browse Items
-              </Link>
+              {/* IMAGE (AFTER DESCRIPTION) */}
+              <div className="mt-6 rounded-[28px] border border-slate-700/50 bg-slate-950/70 p-6 shadow-2xl shadow-slate-950/40">
+                <img
+                  src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+                  alt="Lost and found service"
+                  className="w-full h-[420px] object-cover rounded-[24px]"
+                />
+              </div>
 
             </div>
-
-          </div>
-
-          <div>
-
-            <img
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
-              alt=""
-              className="rounded-2xl shadow-lg"
-            />
-
           </div>
 
         </div>
       </section>
-
-      {/* FEATURES */}
-
-      <section className="py-20">
-
-        <div className="max-w-7xl mx-auto px-6">
-
-          <h2 className="text-4xl font-bold text-center mb-12">
-            Why Choose LOFO?
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-8">
-
-            <div className="bg-white p-8 rounded-xl shadow">
-              <h3 className="text-xl font-semibold mb-4">
-                Report Lost Items
-              </h3>
-
-              <p className="text-gray-600">
-                Quickly submit information about
-                your missing belongings.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow">
-              <h3 className="text-xl font-semibold mb-4">
-                Upload Found Items
-              </h3>
-
-              <p className="text-gray-600">
-                Help people recover their items.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-xl shadow">
-              <h3 className="text-xl font-semibold mb-4">
-                Smart Search
-              </h3>
-
-              <p className="text-gray-600">
-                Search through hundreds of reports.
-              </p>
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
     </div>
   );
 }

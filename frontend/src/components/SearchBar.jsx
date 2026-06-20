@@ -17,12 +17,12 @@ export default function SearchBar({ onSearch }) {
         onChange={(e) =>
           setKeyword(e.target.value)
         }
-        className="flex-1 border p-3 rounded"
+        className="flex-1 border border-slate-200 rounded-3xl px-4 py-3"
       />
 
       <button
         onClick={handleSearch}
-        className="bg-blue-600 text-white px-6 rounded"
+        className="bg-brand text-white px-6 rounded-3xl hover:bg-brand/90"
       >
         Search
       </button>

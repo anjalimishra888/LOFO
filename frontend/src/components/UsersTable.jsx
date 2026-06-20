@@ -167,8 +167,7 @@ export default function UsersTable({
                           user._id
                         }
                         className="
-                          bg-red-600
-                          hover:bg-red-700
+                          bg-danger
                           text-white
                           px-4
                           py-2

@@ -1,25 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
-export default function ItemCard({
-  item,
-  onDelete
-}) {
+export default function ItemCard({ item, onDelete }) {
 
-  const handleDelete = async () => {
+  const navigate = useNavigate();
+
+  const handleDelete = async (e) => {
+
+    e.stopPropagation();
 
     const confirmDelete =
-      window.confirm(
-        "Delete this item?"
-      );
+      window.confirm("Delete this item?");
 
     if (!confirmDelete) return;
 
     try {
 
-      await api.delete(
-        `/items/${item._id}`
-      );
+      await api.delete(`/items/${item._id}`);
 
       if (onDelete) {
         onDelete(item._id);
@@ -36,69 +33,69 @@ export default function ItemCard({
     }
   };
 
+  const typeBadge = item.itemType === "found" ? {
+    label: "Found",
+    bg: "bg-emerald-100 text-emerald-700",
+    ring: "ring-emerald-200"
+  } : {
+    label: "Lost",
+    bg: "bg-rose-100 text-rose-700",
+    ring: "ring-rose-200"
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow overflow-hidden">
+    <div
+      onClick={() => navigate(`/items/${item._id}`)}
+      className="relative bg-white rounded-3xl shadow-[0_25px_60px_-35px_rgba(15,23,42,0.35)] overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+    >
+      <div className={`absolute top-4 right-4 rounded-full px-3 py-1 text-xs font-semibold shadow-sm ${typeBadge.bg} ${typeBadge.ring}`}>
+        {typeBadge.label}
+      </div>
 
-      <img
-        src={`http://localhost:5000/uploads/${item.image}`}
-        alt=""
-        className="w-full h-60 object-cover"
-      />
+      {item.image ? (
+        <img
+          src={`http://localhost:5000/uploads/${item.image}`}
+          alt={item.title}
+          className="w-full h-60 object-cover"
+        />
+      ) : (
+        <div className="w-full h-60 bg-slate-200 flex items-center justify-center text-slate-500">
+          No image available
+        </div>
+      )}
 
-      <div className="p-5">
-
-        <h3 className="font-bold text-xl mb-2">
-          {item.title}
-        </h3>
-
-        <p className="text-gray-600">
-          {item.description}
-        </p>
-
-        <div className="flex justify-between mt-5">
-
-          <span
-            className={
-              item.status === "lost"
-                ? "bg-red-100 text-red-600 px-3 py-1 rounded-full"
-                : "bg-green-100 text-green-600 px-3 py-1 rounded-full"
-            }
-          >
-            {item.status}
-          </span>
-
+      <div className="p-6 space-y-4">
+        <div>
+          <h3 className="font-semibold text-2xl text-slate-900">{item.title}</h3>
+          <p className="mt-2 text-sm text-slate-500 leading-6 line-clamp-3">{item.description}</p>
         </div>
 
-        <div className="flex gap-3 mt-4">
+        <div className="flex flex-wrap gap-2">
+          <span className="rounded-full bg-slate-100 text-slate-700 px-3 py-1 text-xs uppercase tracking-[0.12em]">
+            {item.category}
+          </span>
+          <span className={item.itemStatus === "resolved" ? "rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs uppercase tracking-[0.12em]" : item.itemStatus === "pending" ? "rounded-full bg-amber-100 text-amber-700 px-3 py-1 text-xs uppercase tracking-[0.12em]" : "rounded-full bg-slate-100 text-slate-700 px-3 py-1 text-xs uppercase tracking-[0.12em]"}>
+            {item.itemStatus || "open"}
+          </span>
+        </div>
 
+        <div className="flex items-center justify-between gap-3">
           <Link
-            to={`/item/${item._id}`}
-            className="
-            bg-blue-600
-            text-white
-            px-4
-            py-2
-            rounded"
+            to={`/items/${item._id}`}
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center justify-center rounded-full bg-slate-900 text-white px-5 py-3 text-sm font-semibold transition hover:bg-slate-800"
           >
-            View
+            View Details
           </Link>
 
           <button
             onClick={handleDelete}
-            className="
-            bg-red-600
-            text-white
-            px-4
-            py-2
-            rounded"
+            className="inline-flex items-center justify-center rounded-full bg-rose-600 text-white px-5 py-3 text-sm font-semibold transition hover:bg-rose-500"
           >
             Delete
           </button>
-
         </div>
-
       </div>
-
     </div>
   );
 }

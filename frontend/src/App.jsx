@@ -11,12 +11,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 import CreateItem from "./pages/CreateItem";
-import MyItems from "./pages/MyItems";
+import RecentItems from "./pages/RecentItems";
 import ItemDetails from "./pages/ItemDetails";
 import EditItem from "./pages/EditItem";
 
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminProfile from "./pages/AdminProfile";
 import Matches from "./pages/Matches";
 
 function NotFound() {
@@ -37,107 +38,93 @@ function NotFound() {
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen bg-gray-100 overflow-x-hidden">
+      <main className="flex flex-col min-h-screen max-w-md w-full mx-auto pb-28">
+        <div className="flex-grow px-4">
+          <Routes>
 
-      <Navbar />
+            {/* PUBLIC ROUTES */}
 
-      <main className="flex-grow">
+            <Route path="/" element={<Home />} />
 
-        <Routes>
+            <Route path="/login" element={<Login />} />
 
-          {/* PUBLIC ROUTES */}
+            <Route path="/register" element={<Register />} />
 
-          <Route
-            path="/"
-            element={<Home />}
-          />
+            {/* ✅ FIXED ROUTE */}
+            <Route path="/items/:id" element={<ItemDetails />} />
 
-          <Route
-            path="/login"
-            element={<Login />}
-          />
+            {/* USER PROTECTED ROUTES */}
 
-          <Route
-            path="/register"
-            element={<Register />}
-          />
+            <Route
+              path="/create"
+              element={
+                <ProtectedRoute>
+                  <CreateItem />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/item/:id"
-            element={<ItemDetails />}
-          />
+            <Route path="/recent-items" element={<RecentItems />} />
 
-          {/* USER PROTECTED ROUTES */}
+            <Route
+              path="/edit/:id"
+              element={
+                <ProtectedRoute>
+                  <EditItem />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/create"
-            element={
-              <ProtectedRoute>
-                <CreateItem />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/my-items"
-            element={
-              <ProtectedRoute>
-                <MyItems />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/matches"
+              element={
+                <ProtectedRoute>
+                  <Matches />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route
-            path="/edit/:id"
-            element={
-              <ProtectedRoute>
-                <EditItem />
-              </ProtectedRoute>
-            }
-          />
+            {/* ADMIN ROUTE */}
 
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/admin/*"
+              element={
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              }
+            />
 
-          <Route
-            path="/matches"
-            element={
-              <ProtectedRoute>
-                <Matches />
-              </ProtectedRoute>
-            }
-          />
+            <Route
+              path="/admin/profile"
+              element={
+                <AdminRoute>
+                  <AdminProfile />
+                </AdminRoute>
+              }
+            />
 
-          {/* ADMIN ROUTE */}
+            {/* 404 */}
 
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          />
+            <Route path="*" element={<NotFound />} />
 
-          {/* 404 */}
+          </Routes>
+        </div>
 
-          <Route
-            path="*"
-            element={<NotFound />}
-          />
-
-        </Routes>
-
+        <Footer />
       </main>
 
-      <Footer />
-
+      <Navbar />
     </div>
   );
 }

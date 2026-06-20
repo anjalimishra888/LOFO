@@ -4,108 +4,38 @@ export default function AdminSidebar() {
   const location = useLocation();
 
   const menuItems = [
-    {
-      name: "Dashboard",
-      path: "/admin",
-      icon: "📊",
-    },
-    {
-      name: "Users",
-      path: "/admin/users",
-      icon: "👥",
-    },
-    {
-      name: "Items",
-      path: "/admin/items",
-      icon: "📦",
-    },
-    {
-      name: "Lost Items",
-      path: "/admin/lost-items",
-      icon: "🔍",
-    },
-    {
-      name: "Found Items",
-      path: "/admin/found-items",
-      icon: "🎯",
-    },
-    {
-      name: "Messages",
-      path: "/admin/messages",
-      icon: "💬",
-    },
-    {
-      name: "Profile",
-      path: "/profile",
-      icon: "👤",
-    },
+    { name: "Dashboard", path: "/admin", icon: "📊" },
+    { name: "Users", path: "/admin/users", icon: "👥" },
+    { name: "Items", path: "/admin/items", icon: "📦" },
+    { name: "Lost", path: "/admin/lost-items", icon: "🔍" },
+    { name: "Found", path: "/admin/found-items", icon: "🎯" },
+    { name: "Messages", path: "/admin/messages", icon: "💬" },
+    { name: "Profile", path: "/admin/profile", icon: "👤" },
   ];
 
   return (
-    <aside className="w-72 min-h-screen bg-slate-900 text-white shadow-xl">
-
-      {/* LOGO */}
-
-      <div className="p-6 border-b border-slate-700">
-
-        <h1 className="text-3xl font-bold tracking-wider">
-          LOFO
-        </h1>
-
-        <p className="text-gray-400 text-sm mt-1">
-          Admin Dashboard
-        </p>
-
+    <section className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mb-6">
+      <div className="mb-4">
+        <h1 className="text-2xl font-semibold text-slate-900">Admin Hub</h1>
+        <p className="text-sm text-slate-500 mt-1">Quick access to admin workflows</p>
       </div>
 
-      {/* MENU */}
-
-      <div className="mt-6">
-
+      <div className="grid grid-cols-2 gap-3">
         {menuItems.map((item) => (
-
           <Link
             key={item.path}
             to={item.path}
-            className={`flex items-center gap-3 px-6 py-4 transition duration-200
-              
-              ${
-                location.pathname === item.path
-                  ? "bg-blue-600 text-white"
-                  : "hover:bg-slate-800 text-gray-300"
-              }
-            `}
+            className={`flex flex-col gap-2 rounded-2xl px-4 py-4 text-sm transition-all duration-200 ease-in-out ${
+              location.pathname === item.path
+                ? "bg-slate-100 text-slate-900 shadow-sm"
+                : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+            }`}
           >
-            <span className="text-xl">
-              {item.icon}
-            </span>
-
-            <span className="font-medium">
-              {item.name}
-            </span>
-
+            <span className="text-lg">{item.icon}</span>
+            <span className="font-medium truncate">{item.name}</span>
           </Link>
-
         ))}
-
       </div>
-
-      {/* FOOTER */}
-
-      <div className="absolute bottom-0 w-72 p-6 border-t border-slate-700">
-
-        <div className="text-sm text-gray-400">
-
-          <p>LOFO Admin Panel</p>
-
-          <p className="mt-1">
-            Lost & Found Management
-          </p>
-
-        </div>
-
-      </div>
-
-    </aside>
+    </section>
   );
 }
